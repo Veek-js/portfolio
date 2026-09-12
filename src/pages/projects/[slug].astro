@@ -1,0 +1,265 @@
+---
+import ProjectDetailLayout from '../../layouts/ProjectDetail.astro';
+import Button from '../../components/Button.astro';
+import ProjectVisual from '../../components/ProjectVisual.astro';
+import ProjectNav from '../../components/ProjectNav.astro';
+import Footer from '../../components/Footer.astro';
+import { projects, archivedProjects, getAdjacentProjects } from '../../data/projects';
+
+export function getStaticPaths() {
+  const allProjects = [...projects, ...archivedProjects];
+  return allProjects.map((project, i) => ({
+    params: { slug: project.slug },
+    props: {
+      project,
+      allProjects,
+      index: i,
+    },
+  }));
+}
+
+const { project, allProjects, index } = Astro.props;
+const { prev, next } = getAdjacentProjects(project.slug);
+const num = String(index + 1).padStart(2, '0');
+
+const statusLabel = project.status === 'active' ? 'Active'
+  : project.status === 'released' ? 'Released'
+  : project.status === 'alpha' ? 'Alpha'
+  : 'Archived';
+---
+
+<ProjectDetailLayout
+  title={`${project.title} — Veekshith`}
+  description={project.description}
+>
+  <div class="home-bg" aria-hidden="true">
+    <div class="home-bg__grid"></div>
+    <div class="home-bg__glow"></div>
+    <div class="home-bg__noise"></div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">veekshith<span>.</span></a>
+      <a href="/#work" class="project-detail__back">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"/>
+          <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        Back to work
+      </a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ═══ PROJECT HERO ═══ -->
+    <section class="cs-hero">
+      <div class="container">
+        <div class="cs-hero__label">
+          <span class="cs-hero__label-num">{num}</span>
+          <span class="cs-hero__label-line"></span>
+          <span>{project.category}</span>
+        </div>
+
+        <h1 class="cs-hero__title">{project.title}</h1>
+        <p class="cs-hero__desc">{project.longDescription}</p>
+
+        <div class="cs-hero__meta">
+          <div class="cs-hero__meta-item">
+            <span class="cs-hero__meta-key">Status</span>
+            <span class="cs-hero__meta-val cs-hero__meta-val--status">
+              <span class="cs-hero__status-dot"></span>
+              {statusLabel}
+            </span>
+          </div>
+          {project.role && (
+            <div class="cs-hero__meta-item">
+              <span class="cs-hero__meta-key">Role</span>
+              <span class="cs-hero__meta-val">{project.role}</span>
+            </div>
+          )}
+          {project.year && (
+            <div class="cs-hero__meta-item">
+              <span class="cs-hero__meta-key">Year</span>
+              <span class="cs-hero__meta-val">{project.year}</span>
+            </div>
+          )}
+        </div>
+
+        <div class="cs-hero__tech">
+          {project.technologies.map((tech) => (
+            <span class="cs-hero__tech-tag">{tech}</span>
+          ))}
+        </div>
+
+        <div class="cs-hero__actions">
+          {project.github && (
+            <Button href={project.github} variant="primary">GitHub ↗</Button>
+          )}
+          {project.live && (
+            <Button href={project.live} variant="secondary">Live Project ↗</Button>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ HERO VISUAL ═══ -->
+    <div class="container">
+      <div class="cs-visual">
+        <div class="cs-visual__content">
+          <ProjectVisual visual={project.visual} title={project.title} />
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ OVERVIEW ═══ -->
+    {project.overview && (
+      <section class="cs-overview">
+        <div class="container">
+          <div class="cs-overview__inner">
+            <div class="cs-overview__content">
+              <div class="cs-section-label">
+                <span class="cs-section-label-line"></span>
+                <span>Overview</span>
+              </div>
+              <p class="cs-overview__text">{project.overview}</p>
+            </div>
+            <aside class="cs-overview__sidebar">
+              <div class="cs-overview__sidebar-section">
+                <div class="cs-overview__sidebar-label">Status</div>
+                <div class="cs-overview__sidebar-val" style="color: var(--success);">{statusLabel}</div>
+              </div>
+              {project.role && (
+                <div class="cs-overview__sidebar-section">
+                  <div class="cs-overview__sidebar-label">Role</div>
+                  <div class="cs-overview__sidebar-val">{project.role}</div>
+                </div>
+              )}
+              <div class="cs-overview__sidebar-section">
+                <div class="cs-overview__sidebar-label">Type</div>
+                <div class="cs-overview__sidebar-val">{project.category}</div>
+              </div>
+              <div class="cs-overview__sidebar-section">
+                <div class="cs-overview__sidebar-label">Stack</div>
+                <div class="cs-overview__sidebar-val">{project.technologies.join(' / ')}</div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- ═══ PROBLEM ═══ -->
+    {project.problem && (
+      <section class="cs-problem">
+        <div class="container">
+          <div class="cs-section-label">
+            <span class="cs-section-label-line"></span>
+            <span>The Problem</span>
+          </div>
+          <p class="cs-problem__text">{project.problem}</p>
+        </div>
+      </section>
+    )}
+
+    <!-- ═══ WHAT I BUILT ═══ -->
+    {project.work && project.work.length > 0 && (
+      <section class="cs-work">
+        <div class="container">
+          <div class="cs-section-label">
+            <span class="cs-section-label-line"></span>
+            <span>What I Built</span>
+          </div>
+          <div class="cs-work__list">
+            {project.work.map((item, i) => (
+              <div class="cs-work__item">
+                <span class="cs-work__num">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3 class="cs-work__item-title">{item.title}</h3>
+                  <p class="cs-work__item-content">{item.content}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- ═══ TECHNICAL ═══ -->
+    {project.technical && project.technical.length > 0 && (
+      <section class="cs-technical">
+        <div class="container">
+          <div class="cs-section-label">
+            <span class="cs-section-label-line"></span>
+            <span>Technical</span>
+          </div>
+          <div class="cs-technical__grid">
+            {project.technical.map((group) => (
+              <div class="cs-technical__group">
+                <div class="cs-technical__group-label">{group.label}</div>
+                {group.items.map((item) => (
+                  <div class="cs-technical__item">{item}</div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- ═══ LESSONS ═══ -->
+    {project.lessons && (
+      <section class="cs-lessons">
+        <div class="container">
+          <div class="cs-section-label">
+            <span class="cs-section-label-line"></span>
+            <span>What I Learned</span>
+          </div>
+          <p class="cs-lessons__text">{project.lessons}</p>
+        </div>
+      </section>
+    )}
+
+    <!-- ═══ RESULTS ═══ -->
+    {project.results && project.results.length > 0 && (
+      <section class="cs-results">
+        <div class="container">
+          <div class="cs-section-label">
+            <span class="cs-section-label-line"></span>
+            <span>Results</span>
+          </div>
+          <div class="cs-results__list">
+            {project.results.map((r) => (
+              <div class="cs-results__item">{r}</div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- ═══ LINKS ═══ -->
+    {(project.github || project.live) && (
+      <section class="cs-links">
+        <div class="container">
+          <div class="cs-section-label">
+            <span class="cs-section-label-line"></span>
+            <span>Explore</span>
+          </div>
+          <div class="cs-links__inner">
+            {project.github && (
+              <Button href={project.github} variant="primary">GitHub ↗</Button>
+            )}
+            {project.live && (
+              <Button href={project.live} variant="secondary">Live Project ↗</Button>
+            )}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- ═══ PROJECT NAVIGATION ═══ -->
+    <ProjectNav prev={prev} next={next} />
+  </main>
+
+  <Footer />
+</ProjectDetailLayout>

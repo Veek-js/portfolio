@@ -1,0 +1,33 @@
+---
+interface Props {
+  interactive?: boolean;
+  accent?: boolean;
+  subtle?: boolean;
+  flush?: boolean;
+  class?: string;
+  tag?: 'div' | 'article' | 'li';
+}
+
+const {
+  interactive = false,
+  accent = false,
+  subtle = false,
+  flush = false,
+  class: className = '',
+  tag: Tag = 'div',
+  ...rest
+} = Astro.props;
+
+const classes = [
+  'card',
+  interactive && 'card--interactive',
+  accent && 'card--accent',
+  subtle && 'card--subtle',
+  flush && 'card--flush',
+  className,
+].filter(Boolean).join(' ');
+---
+
+<Tag class={classes} {...rest}>
+  <slot />
+</Tag>

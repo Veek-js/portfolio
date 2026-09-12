@@ -1,0 +1,109 @@
+---
+import type { Project } from '../data/projects';
+import Button from './Button.astro';
+import Badge from './Badge.astro';
+import ProjectVisual from './ProjectVisual.astro';
+
+interface Props {
+  project: Project;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const num = String(index).padStart(2, '0');
+---
+
+<article class="featured-project reveal">
+  <div class="container">
+    <div class="featured-project__inner">
+      <div class="featured-project__visual" id="featuredVisual">
+        <ProjectVisual visual={project.visual} title={project.title} />
+      </div>
+
+      <div class="featured-project__info">
+        <div class="featured-project__num">
+          <span>{num} / Featured</span>
+        </div>
+
+        <h3 class="featured-project__title">{project.title}</h3>
+        <p class="featured-project__category">{project.category}</p>
+
+        <p class="featured-project__desc">{project.description}</p>
+
+        <div class="featured-project__meta">
+          <div class="featured-project__meta-item">
+            <span class="featured-project__meta-key">Status</span>
+            <span class="featured-project__meta-val featured-project__meta-val--status">
+              <span class="featured-project__status-dot"></span>
+              {project.status === 'active' ? 'Active' : project.status === 'released' ? 'Released' : 'Alpha'}
+            </span>
+          </div>
+          {project.year && (
+            <div class="featured-project__meta-item">
+              <span class="featured-project__meta-key">Year</span>
+              <span class="featured-project__meta-val">{project.year}</span>
+            </div>
+          )}
+        </div>
+
+        <div class="featured-project__tech">
+          {project.technologies.map((tech) => (
+            <span class="featured-project__tech-tag">{tech}</span>
+          ))}
+        </div>
+
+        <div class="featured-project__actions">
+          <Button href={`/projects/${project.slug}`} variant="primary">View Project ↗</Button>
+          {project.github && (
+            <Button href={project.github} variant="secondary">GitHub ↗</Button>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<script>
+(function() {
+  const visual = document.getElementById('featuredVisual');
+  if (!visual) return;
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  let rafId = null;
+  let targetX = 0;
+  let targetY = 0;
+  let currentX = 0;
+  let currentY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    const rect = visual.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    targetX = (e.clientX - centerX) / rect.width * 4;
+    targetY = (e.clientY - centerY) / rect.height * 4;
+  }, { passive: true });
+
+  function animate() {
+    currentX += (targetX - currentX) * 0.06;
+    currentY += (targetY - currentY) * 0.06;
+
+    const inner = visual.querySelector('.project-visual__content');
+    if (inner) {
+      inner.style.transform = `translate(${currentX}px, ${currentY}px) scale(1.01)`;
+    }
+
+    rafId = requestAnimationFrame(animate);
+  }
+
+  document.addEventListener('mouseenter', () => {
+    if (!rafId) rafId = requestAnimationFrame(animate);
+  }, { passive: true });
+
+  document.addEventListener('mouseleave', () => {
+    targetX = 0;
+    targetY = 0;
+  }, { passive: true });
+})();
+</script>

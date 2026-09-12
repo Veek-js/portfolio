@@ -1,0 +1,19 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '', ...rest } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class={`footer ${className}`} {...rest}>
+  <div class="container">
+    <div class="footer__inner">
+      <p class="footer__text">
+        <span>veekshith</span> &copy; {year} &middot; built with astro
+      </p>
+      <slot />
+    </div>
+  </div>
+</footer>

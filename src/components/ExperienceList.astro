@@ -1,0 +1,63 @@
+---
+import type { Experience } from '../data/experience';
+
+interface Props {
+  experiences: Experience[];
+}
+
+const { experiences } = Astro.props;
+---
+
+<div class="exp-list">
+  {experiences.map((exp) => (
+    <article class={`exp-entry reveal ${exp.current ? 'exp-entry--current' : ''}`}>
+      <div class="exp-entry__dot" aria-hidden="true"></div>
+
+      <div class="exp-entry__period">
+        <span>{exp.period}</span>
+        <span class="exp-entry__period-line"></span>
+        {exp.current && (
+          <span class="exp-entry__status">
+            <span class="exp-entry__status-dot"></span>
+            Current
+          </span>
+        )}
+      </div>
+
+      <h3 class="exp-entry__org">{exp.organization}</h3>
+      <p class="exp-entry__role">{exp.role}</p>
+      <p class="exp-entry__type">{exp.type}</p>
+
+      <p class="exp-entry__desc">{exp.description}</p>
+
+      {exp.highlights && exp.highlights.length > 0 && (
+        <div class="exp-entry__highlights">
+          {exp.highlights.map((h) => (
+            <div class="exp-entry__highlight">{h}</div>
+          ))}
+        </div>
+      )}
+
+      <div class="exp-entry__tech">
+        {exp.technologies.map((tech, i) => (
+          <>
+            <span class="exp-entry__tech-item">{tech}</span>
+            {i < exp.technologies.length - 1 && (
+              <span class="exp-entry__tech-sep">·</span>
+            )}
+          </>
+        ))}
+      </div>
+
+      {exp.link && (
+        <a href={exp.link} class="exp-entry__link" target="_blank" rel="noopener noreferrer">
+          Join Server
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      )}
+    </article>
+  ))}
+</div>

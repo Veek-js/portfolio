@@ -1,0 +1,39 @@
+---
+interface Props {
+  id?: string;
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  label?: string;
+  title: string;
+  subtitle?: string;
+}
+
+const {
+  id,
+  size = 'md',
+  class: className = '',
+  label,
+  title,
+  subtitle,
+  ...rest
+} = Astro.props;
+
+const classes = [
+  'section',
+  size !== 'md' && `section--${size}`,
+  className,
+].filter(Boolean).join(' ');
+---
+
+<section id={id} class={classes} {...rest}>
+  <div class="container">
+    {(label || title) && (
+      <div class="section__header">
+        {label && <div class="section__label">{label}</div>}
+        {title && <h2 class="section__title">{title}</h2>}
+        {subtitle && <p class="section__subtitle">{subtitle}</p>}
+      </div>
+    )}
+    <slot />
+  </div>
+</section>

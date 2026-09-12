@@ -1,0 +1,76 @@
+---
+import type { Project } from '../data/projects';
+import ProjectVisual from './ProjectVisual.astro';
+
+interface Props {
+  project: Project;
+  index: number;
+  layout?: 'a' | 'b';
+}
+
+const { project, index, layout = 'a' } = Astro.props;
+const num = String(index).padStart(2, '0');
+---
+
+<article class={`project-row project-row--${layout} reveal`}>
+  <div class="container">
+    <div class="project-row__inner">
+      <div class="project-row__visual">
+        <ProjectVisual visual={project.visual} title={project.title} />
+      </div>
+
+      <div class="project-row__info">
+        <div class="project-row__num">
+          <span>{num}</span>
+        </div>
+
+        <h3 class="project-row__title">{project.title}</h3>
+        <p class="project-row__category">{project.category}</p>
+
+        <p class="project-row__desc">{project.description}</p>
+
+        <ul class="project-row__features">
+          {project.features.slice(0, 3).map((f) => (
+            <li class="project-row__feature">{f}</li>
+          ))}
+        </ul>
+
+        <div class="project-row__tech">
+          {project.technologies.map((tech) => (
+            <span class="project-row__tech-tag">{tech}</span>
+          ))}
+        </div>
+
+        <div class="project-row__actions">
+          <a href={`/projects/${project.slug}`} class="project-row__arrow">
+            View Project
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+          {project.github && (
+            <a href={project.github} class="project-row__arrow" target="_blank" rel="noopener noreferrer">
+              GitHub
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          )}
+          {project.live && (
+            <a href={project.live} class="project-row__arrow" target="_blank" rel="noopener noreferrer">
+              Live
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,222 @@
+---
+import type { StackCapability } from '../data/stack';
+import { stackGroups } from '../data/stack';
+import { getProjectBySlug } from '../data/projects';
+
+interface Props {
+  capabilities: StackCapability[];
+}
+
+const { capabilities } = Astro.props;
+---
+
+<!-- Desktop layout -->
+<div class="stack-layout" id="stack-desktop">
+  <!-- Capability list -->
+  <div class="stack-list" role="list">
+    {capabilities.map((cap, i) => (
+      <div
+        class={`stack-list__item${i === 0 ? ' is-active' : ''}`}
+        role="listitem"
+        tabindex="0"
+        data-capability={cap.id}
+        aria-label={`${cap.num} ${cap.title}`}
+      >
+        <span class="stack-list__indicator" aria-hidden="true"></span>
+        <span class="stack-list__num">{cap.num}</span>
+        <div>
+          <h3 class="stack-list__title">{cap.title}</h3>
+          <div class="stack-list__tech">
+            {cap.technologies.map((tech, j) => (
+              <>
+                <span class="stack-list__tech-item">{tech.name}</span>
+                {j < cap.technologies.length - 1 && (
+                  <span class="stack-list__tech-sep">·</span>
+                )}
+              </>
+            ))}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Details panel -->
+  <div class="stack-details">
+    <div class="stack-details__empty" id="stack-empty">
+      <div class="stack-details__empty-icon">←</div>
+      <div class="stack-details__empty-text">Select a capability</div>
+    </div>
+
+    {capabilities.map((cap, i) => (
+      <div
+        class={`stack-details__content${i === 0 ? ' is-visible' : ''}`}
+        id={`stack-detail-${cap.id}`}
+        data-capability={cap.id}
+      >
+        <div class="stack-details__org">
+          <span class="stack-details__org-line"></span>
+          <span>{cap.num} / {cap.title}</span>
+        </div>
+        <h3 class="stack-details__title">{cap.title}</h3>
+        <p class="stack-details__desc">{cap.description}</p>
+
+        <div class="stack-details__tech-list">
+          {cap.technologies.map((tech) => (
+            <div class="stack-details__tech-entry">
+              <div class="stack-details__tech-name">{tech.name}</div>
+              <div class="stack-details__tech-context">{tech.context}</div>
+            </div>
+          ))}
+        </div>
+
+        {cap.projects && cap.projects.length > 0 && (
+          <div>
+            <div class="stack-details__projects-label">Used in</div>
+            <div class="stack-details__projects">
+              {cap.projects.map((slug) => {
+                const project = getProjectBySlug(slug);
+                if (!project) return null;
+                return (
+                  <a href={`/projects/${slug}`} class="stack-details__project-link">
+                    {project.title}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+</div>
+
+<!-- Mobile accordion -->
+<div class="stack-accordion" id="stack-accordion">
+  {capabilities.map((cap) => (
+    <div class="stack-accordion__item">
+      <button
+        class="stack-accordion__button"
+        aria-expanded="false"
+        aria-controls={`accordion-panel-${cap.id}`}
+        data-accordion-trigger={cap.id}
+      >
+        <span class="stack-accordion__num">{cap.num}</span>
+        <span class="stack-accordion__name">{cap.title}</span>
+        <svg class="stack-accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+      </button>
+      <div
+        class="stack-accordion__panel"
+        id={`accordion-panel-${cap.id}`}
+        aria-hidden="true"
+        role="region"
+      >
+        <div class="stack-accordion__inner">
+          <p class="stack-accordion__desc">{cap.description}</p>
+
+          <div class="stack-accordion__tech-title">Technologies</div>
+          <ul class="stack-accordion__tech-list">
+            {cap.technologies.map((tech) => (
+              <li class="stack-accordion__tech-item">
+                <div class="stack-accordion__tech-name">{tech.name}</div>
+                <div class="stack-accordion__tech-ctx">{tech.context}</div>
+              </li>
+            ))}
+          </ul>
+
+          {cap.projects && cap.projects.length > 0 && (
+            <div>
+              <div class="stack-details__projects-label">Used in</div>
+              <div class="stack-accordion__projects">
+                {cap.projects.map((slug) => {
+                  const project = getProjectBySlug(slug);
+                  if (!project) return null;
+                  return (
+                    <a href={`/projects/${slug}`} class="stack-accordion__project-link">
+                      {project.title}
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+<!-- Stack groups summary -->
+<div class="stack-groups">
+  <h3 class="stack-groups__title">Full Stack Overview</h3>
+  <div class="stack-groups__grid">
+    {stackGroups.map((group) => (
+      <div class="stack-group">
+        <div class="stack-group__label">{group.label}</div>
+        <ul class="stack-group__items">
+          {group.items.map((item) => (
+            <li class="stack-group__item">{item}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  function initStack() {
+    const items = document.querySelectorAll<HTMLElement>('.stack-list__item');
+    const details = document.querySelectorAll<HTMLElement>('.stack-details__content');
+    const empty = document.getElementById('stack-empty');
+    const triggers = document.querySelectorAll<HTMLButtonElement>('[data-accordion-trigger]');
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Desktop: hover/focus on capability list
+    function setActive(id: string) {
+      items.forEach((item) => {
+        item.classList.toggle('is-active', item.dataset.capability === id);
+      });
+      details.forEach((detail) => {
+        const isActive = detail.dataset.capability === id;
+        detail.classList.toggle('is-visible', isActive);
+      });
+      if (empty) {
+        empty.classList.toggle('is-hidden', true);
+      }
+    }
+
+    items.forEach((item) => {
+      const id = item.dataset.capability!;
+      item.addEventListener('mouseenter', () => setActive(id));
+      item.addEventListener('focus', () => setActive(id));
+    });
+
+    // Mobile: accordion
+    triggers.forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const id = trigger.dataset.accordionTrigger!;
+        const panel = document.getElementById(`accordion-panel-${id}`);
+        if (!panel) return;
+
+        const expanded = trigger.getAttribute('aria-expanded') === 'true';
+
+        // Close all others
+        triggers.forEach((t) => {
+          if (t !== trigger) {
+            t.setAttribute('aria-expanded', 'false');
+            const otherPanel = document.getElementById(`accordion-panel-${t.dataset.accordionTrigger!}`);
+            if (otherPanel) otherPanel.setAttribute('aria-hidden', 'true');
+          }
+        });
+
+        trigger.setAttribute('aria-expanded', String(!expanded));
+        panel.setAttribute('aria-hidden', String(expanded));
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initStack);
+</script>

@@ -1,0 +1,117 @@
+/* ═══════════════════════════════════════════════════
+   TYPOGRAPHY COMPONENT
+   ═══════════════════════════════════════════════════ */
+
+.heading-hero {
+  font-size: var(--text-hero);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-none);
+  color: var(--text-primary);
+}
+
+.heading-1 {
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+.heading-2 {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+.heading-3 {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
+}
+
+.heading-4 {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-snug);
+}
+
+/* ── Body Variants ── */
+.body-lg {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+}
+
+.body-md {
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-secondary);
+}
+
+.body-sm {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--text-tertiary);
+}
+
+/* ── Mono ── */
+.mono {
+  font-family: var(--font-mono);
+}
+
+.mono-sm {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* ── Label ── */
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* ── Accent text ── */
+.text-crimson {
+  color: var(--crimson);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-tertiary {
+  color: var(--text-tertiary);
+}
+
+/* ── Prose (rich text content) ── */
+.prose {
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.prose p + p {
+  margin-top: var(--space-4);
+}
+
+.prose strong {
+  color: var(--text-primary);
+  font-weight: var(--weight-medium);
+}
+
+.prose a {
+  color: var(--crimson);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.prose a:hover {
+  color: var(--crimson-light);
+}

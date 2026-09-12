@@ -1,0 +1,104 @@
+/* ═══════════════════════════════════════════════════
+   GRID / LAYOUT COMPONENTS
+   ═══════════════════════════════════════════════════ */
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.container--sm {
+  max-width: var(--max-width-sm);
+}
+
+.container--md {
+  max-width: var(--max-width-md);
+}
+
+/* ── Grid System ── */
+.grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* ── Auto-fit responsive grids ── */
+.grid--auto-sm {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+}
+
+.grid--auto-md {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+}
+
+.grid--auto-lg {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 28rem), 1fr));
+}
+
+/* ── Asymmetric layouts ── */
+.layout-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.layout-sidebar {
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+/* ── Stack (vertical rhythm) ── */
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.stack--xs { gap: var(--space-2); }
+.stack--sm { gap: var(--space-3); }
+.stack--md { gap: var(--space-4); }
+.stack--lg { gap: var(--space-6); }
+.stack--xl { gap: var(--space-8); }
+
+/* ── Cluster (horizontal grouping) ── */
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .grid--2,
+  .grid--3,
+  .grid--4 {
+    grid-template-columns: 1fr;
+  }
+
+  .layout-split,
+  .layout-sidebar {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .grid--3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
