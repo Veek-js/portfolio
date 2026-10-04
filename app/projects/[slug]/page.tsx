@@ -155,7 +155,7 @@ export default async function ProjectPage({
                 <ul className="mt-4 space-y-3">
                   {project.results.map((result) => (
                     <li key={result} className="flex gap-3 text-[0.9rem] leading-relaxed">
-                      <span className="mt-2 h-px w-4 shrink-0 bg-clay/70" aria-hidden="true" />
+                        <span className="mt-2 h-px w-4 shrink-0 bg-faint" aria-hidden="true" />
                       {result}
                     </li>
                   ))}
@@ -179,7 +179,7 @@ export default async function ProjectPage({
                   data-reveal
                   style={delay(i * 50)}
                 >
-                  <span className="text-[0.72rem] tracking-[0.16em] text-clay">
+                  <span className="text-[0.72rem] tracking-[0.16em] text-faint">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div className="max-w-2xl">
@@ -209,7 +209,7 @@ export default async function ProjectPage({
             <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {project.technical.map((group, i) => (
                 <div key={group.label} className="card p-6" data-reveal style={delay(i * 60)}>
-                  <div className="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-clay">
+                  <div className="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-muted">
                     {group.label}
                   </div>
                   <ul className="mt-4 space-y-3">
@@ -218,7 +218,7 @@ export default async function ProjectPage({
                         key={item}
                         className="flex gap-3 border-b border-line-soft pb-3 text-[0.88rem] leading-relaxed last:border-0 last:pb-0"
                       >
-                        <span className="mt-2 h-px w-4 shrink-0 bg-clay/70" aria-hidden="true" />
+                      <span className="mt-2 h-px w-4 shrink-0 bg-faint" aria-hidden="true" />
                         {item}
                       </li>
                     ))}
@@ -252,7 +252,7 @@ export default async function ProjectPage({
               <span className="text-[0.68rem] uppercase tracking-[0.16em] text-faint">
                 ← Previous
               </span>
-              <div className="mt-2 font-display text-[1.5rem] tracking-tight transition-colors group-hover:text-clay">
+              <div className="mt-2 font-display text-[1.5rem] tracking-tight transition-colors group-hover:text-blue">
                 {prev.title}
               </div>
               <div className="text-[0.82rem] text-muted">{prev.category}</div>
@@ -269,7 +269,7 @@ export default async function ProjectPage({
               <span className="text-[0.68rem] uppercase tracking-[0.16em] text-faint">
                 Next →
               </span>
-              <div className="mt-2 font-display text-[1.5rem] tracking-tight transition-colors group-hover:text-clay">
+              <div className="mt-2 font-display text-[1.5rem] tracking-tight transition-colors group-hover:text-blue">
                 {next.title}
               </div>
               <div className="text-[0.82rem] text-muted">{next.category}</div>

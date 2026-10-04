@@ -43,7 +43,7 @@ export default function ExperienceList({ experiences }: { experiences: Experienc
               <ul className="mt-4 space-y-1.5">
                 {exp.highlights.map((highlight) => (
                   <li key={highlight} className="flex gap-3 text-[0.9rem] text-ink/85">
-                    <span className="mt-2 h-px w-4 shrink-0 bg-clay/70" aria-hidden="true" />
+                    <span className="mt-2 h-px w-4 shrink-0 bg-faint" aria-hidden="true" />
                     {highlight}
                   </li>
                 ))}

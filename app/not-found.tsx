@@ -7,7 +7,7 @@ export default function NotFound() {
       <h1 className="mt-6 font-display text-hero">
         This page didn&apos;t
         <br />
-        make it to <em className="italic text-clay">prod.</em>
+        make it to prod.
       </h1>
       <p className="mt-6 max-w-md text-lead text-muted">
         The link is old, or the project moved. Everything real is still on the main

@@ -5,8 +5,8 @@ import { delay } from "./ProjectCard";
 const statusTone: Record<ArchiveProject["status"], string> = {
   archived: "text-muted",
   replaced: "text-muted",
-  discontinued: "text-clay",
-  experimental: "text-clay",
+  discontinued: "text-blue",
+  experimental: "text-blue",
 };
 
 export default function ArchiveList({ projects }: { projects: ArchiveProject[] }) {
@@ -45,7 +45,7 @@ export default function ArchiveList({ projects }: { projects: ArchiveProject[] }
                   {project.description}
                 </p>
                 {project.reason && (
-                  <p className="mt-3 font-display text-[1.02rem] italic text-clay">
+                  <p className="mt-3 font-display text-[1.02rem] text-muted">
                     {project.reason}
                   </p>
                 )}

@@ -26,7 +26,7 @@ export default function StackGrid({ capabilities }: { capabilities: StackCapabil
           <article key={cap.id} className="card p-6 md:p-7" data-reveal style={delay(i * 60)}>
             <div className="flex items-baseline justify-between gap-4">
               <h3 className="font-display text-[1.5rem] tracking-tight">{cap.title}</h3>
-              <span className="text-[0.7rem] tracking-[0.16em] text-blue">
+              <span className="text-[0.7rem] tracking-[0.16em] text-faint">
                 {cap.num}
               </span>
             </div>
@@ -62,7 +62,7 @@ export default function StackGrid({ capabilities }: { capabilities: StackCapabil
                     <a
                       key={slug}
                       href={`/projects/${slug}`}
-                      className="text-[0.85rem] text-muted underline decoration-line underline-offset-4 transition-colors hover:text-blue hover:decoration-blue"
+                      className="text-[0.85rem] text-muted underline decoration-line underline-offset-4 transition-colors hover:text-ink"
                     >
                       {project.title}
                     </a>
@@ -77,7 +77,7 @@ export default function StackGrid({ capabilities }: { capabilities: StackCapabil
       <div className="mt-12 grid gap-8 border-t border-line pt-8 sm:grid-cols-2 lg:grid-cols-4" data-reveal>
         {stackGroups.map((group) => (
           <div key={group.label}>
-            <div className="text-[0.66rem] uppercase tracking-[0.16em] text-blue">
+            <div className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-muted">
               {group.label}
             </div>
             <ul className="mt-3 space-y-1.5 text-[0.88rem] text-muted">

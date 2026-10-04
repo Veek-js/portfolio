@@ -15,22 +15,22 @@ export default function Footer() {
             href={site.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="transition-colors hover:text-clay"
+            className="transition-colors hover:text-ink"
           >
             GitHub
           </a>
-          <a href={`mailto:${site.email}`} className="transition-colors hover:text-clay">
+          <a href={`mailto:${site.email}`} className="transition-colors hover:text-ink">
             Email
           </a>
           <a
             href={site.discord}
             target="_blank"
             rel="noopener noreferrer"
-            className="transition-colors hover:text-clay"
+            className="transition-colors hover:text-ink"
           >
             Discord
           </a>
-          <a href="#top" className="transition-colors hover:text-clay">
+          <a href="#top" className="transition-colors hover:text-ink">
             Back to top
           </a>
         </div>

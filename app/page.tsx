@@ -30,67 +30,59 @@ export default function HomePage() {
   return (
     <main>
       {/* ── HERO ── */}
-      <section className="wrap pb-[clamp(3.5rem,8vw,6rem)] pt-[clamp(3rem,7vw,5.5rem)] relative">
-        <div className="hero-glow" aria-hidden="true" />
-        <div className="grid gap-12 lg:grid-cols-[1.55fr_.8fr] lg:items-end">
-          <div>
-            <span className="label" data-reveal>
-              Developer · Builder · Operator
-            </span>
-
-            <h1 className="mt-7 font-display text-hero" data-reveal style={delay(60)}>
-              I build things
-              <br />
-              that{" "}
-              <span className="accent">actually run.</span>
-            </h1>
-
-            <p className="mt-7 max-w-xl text-lead text-muted" data-reveal style={delay(140)}>
-              Minecraft plugins, Discord bots, web tools, and the infrastructure behind
-              them. I ship code that powers real communities.
-            </p>
-
-            <div className="mt-9 flex flex-wrap gap-3" data-reveal style={delay(220)}>
-              <a href="#work" className="btn btn--primary">
-                See selected work <ArrowUpRight />
-              </a>
-              <a
-                href={site.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn--ghost"
-              >
-                GitHub <ArrowUpRight />
-              </a>
-            </div>
-          </div>
-
-          <aside className="card p-6 md:p-7" data-reveal style={delay(260)}>
-            <span className="label label--plain">Right now</span>
-
-            <dl className="mt-5">
-              {now.map((row) => (
-                <div
-                  key={row.key}
-                  className="flex items-baseline justify-between gap-5 border-b border-line-soft py-2.5 last:border-0"
-                >
-                  <dt className="text-[0.68rem] uppercase tracking-[0.14em] text-faint">
-                    {row.key}
-                  </dt>
-                  <dd className="text-right text-[0.9rem]">{row.value}</dd>
-                </div>
-              ))}
-            </dl>
-
-            <div className="mt-5 flex flex-wrap gap-2">
-              {["Java", "TypeScript", "Astro", "Discord.js", "Docker"].map((tech) => (
-                <span key={tech} className="chip">
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </aside>
+      <section className="wrap pb-[clamp(3rem,7vw,5rem)] pt-[clamp(6.5rem,13vw,9.5rem)] text-center">
+        <div data-reveal>
+          <span className="pill">
+            <span className="dot" />
+            Available for new work
+          </span>
         </div>
+
+        <h1 className="mx-auto mt-7 max-w-4xl font-display text-hero" data-reveal style={delay(60)}>
+          I build things
+          <br />
+          that actually run.
+        </h1>
+
+        <p className="mx-auto mt-6 max-w-xl text-lead text-muted" data-reveal style={delay(140)}>
+          Minecraft plugins, Discord bots, web tools, and the infrastructure behind
+          them. I ship code that powers real communities.
+        </p>
+
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-7 gap-y-3" data-reveal style={delay(220)}>
+          <a href="#work" className="btn btn--primary">
+            See selected work <ArrowUpRight />
+          </a>
+          <a
+            href={site.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="arrow-link"
+          >
+            GitHub <ArrowUpRight />
+          </a>
+        </div>
+
+        <aside className="card mx-auto mt-12 max-w-3xl p-6 text-left md:p-8" data-reveal style={delay(260)}>
+          <dl className="grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-4">
+            {now.map((row) => (
+              <div key={row.key}>
+                <dt className="text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-faint">
+                  {row.key}
+                </dt>
+                <dd className="mt-1.5 text-[0.95rem] font-medium">{row.value}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="mt-6 flex flex-wrap gap-2 border-t border-line-soft pt-5">
+            {["Java", "TypeScript", "Astro", "Discord.js", "Docker"].map((tech) => (
+              <span key={tech} className="chip">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </aside>
       </section>
 
       {/* ── WORK ── */}
@@ -98,11 +90,7 @@ export default function HomePage() {
         <div className="wrap">
           <SectionHeading
             label="02 — Selected Work"
-            title={
-              <>
-                Things I&apos;ve <span className="accent">actually</span> built.
-              </>
-            }
+            title={<>Things I&apos;ve actually built.</>}
             intro="Plugins running in production, bots handling real communities, web tools people use daily. Not prototypes — products."
           />
 
@@ -122,11 +110,7 @@ export default function HomePage() {
         <div className="wrap">
           <SectionHeading
             label="03 — Experience"
-            title={
-              <>
-                Where I&apos;ve <span className="accent">built</span> and operated.
-              </>
-            }
+            title={<>Where I&apos;ve built and operated.</>}
             intro="Running servers, building plugins, shipping bots — the work behind the projects."
           />
           <ExperienceList experiences={experiences} />
@@ -138,11 +122,7 @@ export default function HomePage() {
         <div className="wrap">
           <SectionHeading
             label="04 — Stack"
-            title={
-              <>
-                What I <span className="accent">build</span> with.
-              </>
-            }
+            title={<>What I build with.</>}
             intro="Tools change. The ability to build with them matters more."
           />
           <StackGrid capabilities={capabilities} />
@@ -157,8 +137,7 @@ export default function HomePage() {
             <h2 className="mt-6 font-display text-title leading-[1.1]">
               The person
               <br />
-              behind the{" "}
-              <span className="accent">projects.</span>
+              behind the projects.
             </h2>
 
             <dl className="mt-8 max-w-sm border-t border-line pt-4">
@@ -191,7 +170,7 @@ export default function HomePage() {
               actually use, on a Tuesday, without thinking about it.
             </p>
 
-            <blockquote className="mt-8 border-l-2 border-blue pl-5 font-display text-[1.25rem] leading-snug">
+            <blockquote className="mt-8 border-l-2 border-line pl-5 font-display text-[1.25rem] leading-snug text-ink">
               I care more about useful software than impressive-looking software.
             </blockquote>
 
@@ -200,7 +179,7 @@ export default function HomePage() {
               <div className="mt-4 grid gap-4 sm:grid-cols-3">
                 {workflow.map((step) => (
                   <div key={step.num} className="border-t border-line pt-3">
-                    <div className="text-[0.68rem] tracking-[0.16em] text-blue">
+                    <div className="text-[0.68rem] tracking-[0.16em] text-faint">
                       {step.num}
                     </div>
                     <div className="mt-2 font-display text-[1.15rem]">{step.title}</div>
@@ -220,11 +199,7 @@ export default function HomePage() {
         <div className="wrap">
           <SectionHeading
             label="06 — Archive"
-            title={
-              <>
-                Things that <span className="accent">didn&apos;t</span> stay.
-              </>
-            }
+            title={<>Things that didn&apos;t stay.</>}
             intro="Experiments, old builds and things that taught me something. Tap a row to expand."
           />
           <ArchiveList projects={archiveProjects} />
@@ -232,14 +207,12 @@ export default function HomePage() {
       </section>
 
       {/* ── CONTACT ── */}
-      <section id="contact" className="section section-alt border-t border-line relative">
-        <div className="contact-glow" aria-hidden="true" />
+      <section id="contact" className="section section-alt border-t border-line">
         <div className="wrap text-center">
           <div data-reveal>
             <span className="label">07 — Contact</span>
             <h2 className="mt-6 font-display text-hero">
-              Let&apos;s make something{" "}
-              <span className="accent">useful.</span>
+              Let&apos;s make something useful.
             </h2>
             <p className="mt-6 max-w-md mx-auto text-lead text-muted">
               Got a project in mind, or just want to talk shop? I&apos;m always open to

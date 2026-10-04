@@ -36,7 +36,7 @@ export default function ProjectCard({
       <div className="flex flex-wrap items-center justify-between gap-4">
         <span className="font-mono text-[0.7rem] tracking-[0.16em] text-muted">
           {num} <span className="text-faint">/</span>{" "}
-          <span className="text-clay">{project.category}</span>
+          <span className="text-blue">{project.category}</span>
         </span>
         <StatusTag status={project.status} />
       </div>
@@ -58,7 +58,7 @@ export default function ProjectCard({
       <ul className={`mt-6 space-y-2 ${featured ? "" : "hidden md:block"}`}>
         {features.map((feature) => (
           <li key={feature} className="flex gap-3 text-[0.9rem] text-ink/85">
-            <span className="mt-2 h-px w-4 shrink-0 bg-clay/70" aria-hidden="true" />
+            <span className="mt-2 h-px w-4 shrink-0 bg-faint" aria-hidden="true" />
             {feature}
           </li>
         ))}
