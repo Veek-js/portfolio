@@ -56,44 +56,56 @@ export function Hero() {
   );
 }
 
-function Preview({ kind, num, title }) {
-  return (
-    <span className={`preview ${kind}`} aria-hidden="true">
-      <span className="plate-cap">Fig. {num} — {title}</span>
-      {kind === 'p1' && <span className="p1-ui"><b /><i /><i /><em /></span>}
-      {kind === 'p2' && <><span className="p2-moon" /><span className="p2-lines"><b /><b /><b /></span></>}
-      {kind === 'p5' && <span className="p5-tix"><b /><b /><b /></span>}
-      {kind === 'p4' && <span className="p4-cols"><b /><b /><b /></span>}
-    </span>
-  );
-}
-
 export function Work() {
+  const [open, setOpen] = useState([]);
+  const toggle = (num) => setOpen((o) =>
+    o.includes(num) ? o.filter((n) => n !== num) : [...o, num]
+  );
   return (
     <section className="work" id="work">
       <div className="work-head">
         <h2><em>01</em> Selected work <sup>(04)</sup></h2>
-        <p>Hover an entry to inspect its plate. Every link goes somewhere real.</p>
+        <p>Tap + to open a file. Every link goes somewhere real.</p>
       </div>
-      {PROJECTS.map((p) => (
-        <article className="row reveal" key={p.num}>
-          <span className="num">Fig. {p.num}</span>
-          <span className="title">
-            <a href={p.href} target="_blank" rel="noopener">{p.title}</a>{' '}
-            <i className="serif-i">{p.sub}</i>
-          </span>
-          <span className="meta">{p.meta}</span>
-          <span className="arrow">{p.arrow ?? '↗'}</span>
-          <span className="row-links">
-            {p.privateNote && <span className="priv">* {p.privateNote}</span>}
-            {p.links.map((l) => (
-              <a key={l.label} href={l.href} target="_blank" rel="noopener">{l.label}</a>
-            ))}
-            {p.num === '01' && <a href={DM_URL} target="_blank" rel="noopener">want one? dm me →</a>}
-          </span>
-          <Preview kind={p.preview} num={p.num} title={p.title} />
-        </article>
-      ))}
+      {PROJECTS.map((p) => {
+        const isOpen = open.includes(p.num);
+        return (
+          <article className={`row reveal${isOpen ? ' open' : ''}`} key={p.num}>
+            <span className="num">Fig. {p.num}</span>
+            <span className="title">
+              <a href={p.href} target="_blank" rel="noopener">{p.title}</a>{' '}
+              <i className="serif-i">{p.sub}</i>
+            </span>
+            <span className="meta">{p.meta}</span>
+            <button
+              className="expand-btn"
+              aria-expanded={isOpen}
+              aria-label={`${isOpen ? 'Close' : 'Open'} details for ${p.title}`}
+              onClick={() => toggle(p.num)}
+            >
+              <span className="plus">+</span>
+            </button>
+            <div className="row-more">
+              <div className="row-more-inner">
+                <p className="row-desc">{p.desc}</p>
+                <ul className="row-feats">
+                  {p.feats.map((f) => <li key={f}>{f}</li>)}
+                </ul>
+                <div className="chips">
+                  {p.tech.map((t) => <span key={t}>{t}</span>)}
+                </div>
+              </div>
+            </div>
+            <span className="row-links">
+              {p.privateNote && <span className="priv">* {p.privateNote}</span>}
+              {p.links.map((l) => (
+                <a key={l.label} href={l.href} target="_blank" rel="noopener">{l.label}</a>
+              ))}
+              {p.num === '01' && <a href={DM_URL} target="_blank" rel="noopener">want one? dm me →</a>}
+            </span>
+          </article>
+        );
+      })}
       <p className="arch-note reveal">
         * Earlier filings — DonutTools (fabric mod, '24) · early mod bots · smp plugin
         experiments · ticket prototypes. Ask in DMs for a tour.

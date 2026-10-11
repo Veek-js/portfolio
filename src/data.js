@@ -12,9 +12,14 @@ export const PROJECTS = [
     sub: 'one jar, whole smp',
     meta: 'Minecraft · Java · active',
     href: `${GITHUB}/Vanilla-Core`,
+    desc: 'One jar instead of six plugins — essentials, staff tools and economy for survival servers.',
+    feats: [
+      'Homes, warps, /tpa with SQLite persistence',
+      'Staff tools — freeze, vanish, invsee, staff chat',
+      'Player economy + spawn & random-tp with cooldowns',
+    ],
+    tech: ['java', 'paper', 'sqlite', 'gradle'],
     links: [{ label: 'code ↗', href: `${GITHUB}/Vanilla-Core` }],
-    dm: true,
-    preview: 'p1',
   },
   {
     num: '02',
@@ -22,11 +27,17 @@ export const PROJECTS = [
     sub: 'tickets, mods & giveaways',
     meta: 'Discord · TS · in production',
     href: `${GITHUB}/Apex-Building-Bot`,
+    desc: 'Ticketing, moderation, giveaways and builder ratings — live on multiple servers.',
+    feats: [
+      'Ticket panels — general, build, digout, refund, regear',
+      'Moderation — warn, mute, tempban, slowmode, lock',
+      'Split-or-Steal giveaways with daily auto runs',
+    ],
+    tech: ['typescript', 'node.js', 'discord.js v14', 'better-sqlite3'],
     links: [
       { label: 'code ↗', href: `${GITHUB}/Apex-Building-Bot` },
       { label: 'see it live ↗', href: INVITE },
     ],
-    preview: 'p2',
   },
   {
     num: '03',
@@ -35,9 +46,13 @@ export const PROJECTS = [
     meta: 'Discord · private build',
     href: DM_URL,
     privateNote: 'no public repo — management bot for Blaze SMP',
+    desc: 'Management bot for Blaze SMP — staff and support workflows run through Discord. Private build; walkthrough in DMs.',
+    feats: [
+      'Built for Blaze SMP staff + support workflows',
+      'Private build — live demo in DMs',
+    ],
+    tech: ['typescript', 'discord.js', 'node.js'],
     links: [{ label: 'demo in dms →', href: DM_URL }],
-    preview: 'p5',
-    arrow: '→',
   },
   {
     num: '04',
@@ -45,11 +60,17 @@ export const PROJECTS = [
     sub: 'type a name, see the skin',
     meta: 'Web · Astro · live',
     href: 'https://minecraft-skin-gallery.netlify.app',
+    desc: 'Type a username, get the skin in 3D — animations, capes, Alex/Steve auto-detect.',
+    feats: [
+      'Real-time 3D via skinview3d + three.js',
+      '6 animations — walk, run, fly, wave, crouch, swim',
+      'PlayerDB lookup + cape rendering',
+    ],
+    tech: ['astro', 'three.js', 'skinview3d', 'playerdb'],
     links: [
       { label: 'open site ↗', href: 'https://minecraft-skin-gallery.netlify.app' },
       { label: 'code ↗', href: `${GITHUB}/Minecraft-Skin-Gallery` },
     ],
-    preview: 'p4',
   },
 ];
 
